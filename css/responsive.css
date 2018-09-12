@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+* {
+    box-sizing: border-box;
+}
+
+a,
+button,
+input {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+body {
+    min-width: 300px; 
+    width: 100%; 
+}
+
+.filter-options {
+    display: grid;
+    grid-template-areas: "title"
+                        "neighborhoods"
+                         "cuisines";
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    height: auto;
+}
+
+.filter-options > h2 {
+    grid-area: title;
+    margin: 5px 20px;
+}
+
+.filter-options > select:nth-child(2) {
+    grid-area: neighborhoods;
+}
+
+.filter-options > select:nth-child(3) {
+    grid-area: cuisines;
+}
+
+.filter-options > .restaurants-list {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+#restaurants-list {
+    display: grid;
+}
+
+@media screen and (max-width: 625px) {
+    nav {
+        height: 80px;
+    }
+    
+    h2 {
+        font-size: 1.2em;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    li {
+        width: 100%;
+    }
+    
+    #restaurants-list {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+}
+
+@media screen and (min-width: 440px) {    
+    .filter-options {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "title title"
+                    "neighborhoods cuisines"
+      }
+}
+
+@media screen and (min-width: 600px) {
+    .filter-options {
+        grid-column-gap: 100px;
+    }
+
+    .filter-options > select:nth-child(2) {
+        justify-self: right;
+    }
+    
+    .filter-options > select:nth-child(3) {
+        justify-self: left;
+    }
+}
+
+@media screen and (min-width: 626px) {
+    #restaurants-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    #restaurants-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1098px) {
+    body {
+        max-width: 1098px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
