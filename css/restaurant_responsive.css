@@ -20,3 +20,41 @@
 #breadcrumb {
     width: 50%;
 }
+
+@media screen and (max-width: 426px) {
+    #breadcrumb,
+    #restaurant-container,
+    #reviews-container {
+        width: 100%;
+    }
+
+    .inside #map-container {
+        padding: 10px 1em;
+        position: static;
+        height: 350px;
+        width: 100%;
+    }
+
+    .inside #footer {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    #reviews-list li {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    body,
+    td,
+    th,
+    p {
+        font-size: 12pt;
+    }
+
+    p {
+        line-height: 1.7;
+    }
+}

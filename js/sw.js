@@ -1,0 +1,1 @@
+self.addEventListener('fetch', request => console.log(request));
