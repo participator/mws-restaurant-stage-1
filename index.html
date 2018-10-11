@@ -11,6 +11,8 @@
 </head>
 
 <body lang="en">
+  <a id="skipLink" href="#filter-results">Skip to filter results</a>
+  
   <header>
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
@@ -23,7 +25,7 @@
     </section>
     <section>
       <div class="filter-options">
-        <h2>Filter Results</h2>
+        <h2 id="filter-results">Filter Results</h2>
         <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
         </select>
