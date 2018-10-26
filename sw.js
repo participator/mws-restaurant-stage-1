@@ -7,7 +7,6 @@ self.addEventListener('install', function(event) {
         '/css/index_responsive.css',
         '/css/restaurant_responsive.css',
         '/css/styles.css',
-        '/data/restaurants.json',
         '/img/offline.svg',
         // '/img/1.jpg',
         // '/img/2.jpg',

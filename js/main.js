@@ -10,8 +10,8 @@ var a = 2;
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added 
-  fetchNeighborhoods();
-  fetchCuisines();
+  // fetchNeighborhoods();
+  // fetchCuisines();
 });
 
 /**
