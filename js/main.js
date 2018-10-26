@@ -10,8 +10,8 @@ var a = 2;
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added 
-  // fetchNeighborhoods();
-  // fetchCuisines();
+  fetchNeighborhoods();
+  fetchCuisines();
 });
 
 /**
@@ -147,7 +147,9 @@ resetRestaurants = (restaurants) => {
  */
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
-  restaurants.forEach(restaurant => {
+  restaurants.filter(restaurant => {
+    return restaurant && restaurant.name && restaurant.address;
+  }).forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
@@ -159,11 +161,13 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
-  const image = document.createElement('img');
-  image.alt = 'Restaurant Image';
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  if ( restaurant && restaurant.photograph) {
+    const image = document.createElement('img');
+    image.alt = 'Restaurant Image';
+    image.className = 'restaurant-img';
+    image.src = DBHelper.imageUrlForRestaurant(restaurant);
+    li.append(image);
+  } 
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;

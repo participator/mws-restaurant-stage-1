@@ -27,12 +27,9 @@ class DBHelper {
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', DBHelper.API_URL);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    //xhr.setRequestHeader('Vary', 'Origin');
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
+        const restaurants = JSON.parse(xhr.responseText);
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
@@ -42,6 +39,17 @@ class DBHelper {
     xhr.onerror = console.log;
     xhr.send();
   }
+
+  // static fetchRestaurants(callback) {
+  //   fetch(DBHelper.API_URL)
+  //   .then(function(response) {
+  //     response.json().then(function(data) {
+  //       callback(null, data);
+  //     });
+  //   }).catch(function(error) {
+  //     callback(error);
+  //   });
+  // }
 
   /**
    * Fetch a restaurant by its ID.
@@ -162,13 +170,13 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**
    * Map marker for a restaurant.
    */
-  static mapMarkerForRestaurant(restaurant, map) {
+   static mapMarkerForRestaurant(restaurant, map) {
     // https://leafletjs.com/reference-1.3.0.html#marker  
     const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
       {title: restaurant.name,
