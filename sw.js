@@ -27,7 +27,7 @@ self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(cacheName).then(function(cache) {
             cache.add('/img/offline.svg');
-            console.log('[cached offline.svg]');
+            //console.log('[cached offline.svg]');
             return cache.addAll(urlsToCache);
         })
     );
@@ -38,13 +38,13 @@ self.addEventListener('fetch', function(event) {
         caches.open(cacheName).then(function(cache) {
             return cache.match(event.request).then(function(response) {
                 if (response) {
-                    console.log('[cached response]');
+                    // console.log('[cached response]', response.clone().url);
                     return response;
                 }
                 else {
                     return fetch(event.request).then(function(networkResponse) {
                         if (networkResponse) {
-                            console.log('[network response]', networkResponse.clone());
+                            // console.log('[network response]', networkResponse.clone().url);
                             if (!networkResponse.clone().url.endsWith('.jpg')) {
                                 cache.put(event.request, networkResponse.clone());
                             }
@@ -52,7 +52,7 @@ self.addEventListener('fetch', function(event) {
                         }
                     }).catch(function() {
                         if (event.request.url.endsWith('.jpg')) {
-                            console.log('[cached img response]');
+                            // console.log('[cached img response]');
                             return cache.match('/img/offline.svg').then(function (response) {
                                 if (response) {
                                     console.log('[retrieve offline.svg]');

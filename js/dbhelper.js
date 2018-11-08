@@ -23,6 +23,7 @@ class DBHelper {
 
   /**
    * Fetch all restaurants.
+   * Uses XMLHttpRequest
    */
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
@@ -40,6 +41,10 @@ class DBHelper {
     xhr.send();
   }
 
+  /**
+   * Fetch all restaurants.
+   * Uses Fetch API
+   */
   // static fetchRestaurants(callback) {
   //   fetch(DBHelper.API_URL)
   //   .then(function(response) {

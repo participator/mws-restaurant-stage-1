@@ -132,6 +132,9 @@ nav {
   line-height: 1;
   margin: 0 20px;
 }
+.filter-options label {
+  color: transparent;
+}
 .filter-options select {
   background-color: white;
   border: 1px solid #fff;
@@ -143,7 +146,6 @@ nav {
   padding: 0 10px;
   width: 200px;
 }
-
 .filter-options select:focus, 
 .filter-options select:hover {
   border: 2.5px solid orange;
