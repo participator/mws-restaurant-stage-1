@@ -3,13 +3,31 @@
  */
 class DBHelper {
 
-    /**
-   * Database URL.
+   /**
+   * API URL.
    * Change this to restaurants.json file location on your server.
    */
-  static get API_URL() {
+  static get API_Restaurants_URL() {
     const port = 1337 // Change this to your server port
     return `http://localhost:${port}/restaurants`;
+  }
+
+   /**
+   * API URL.
+   * Change this to review.json file location on your server.
+   */
+  static get API_Reviews_URL() {
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/reviews/?restaurant_id=`;
+  }
+
+  /**
+   * API POST Review URL
+   * Submit new review
+   */
+  static get API_Review_Create_URL() {
+    const port = 1337;
+    return `http://localhost:${port}/reviews/`;
   }
 
   /**
@@ -27,7 +45,7 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.API_URL);
+    xhr.open('GET', DBHelper.API_Restaurants_URL);
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         const restaurants = JSON.parse(xhr.responseText);
@@ -161,6 +179,58 @@ class DBHelper {
         const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
         callback(null, uniqueCuisines);
       }
+    });
+  }
+
+  /**
+   * Fetch all reviews for a restaurant.
+   * Uses Fetch API
+   */
+  static fetchReviewsByRestaurantId(restaurantId, callback) {
+    fetch(`${DBHelper.API_Reviews_URL}${restaurantId}`)
+    .then(function(response) {
+      response.json().then(function(data) {
+        // TODO: Normalize Date Format Posted to Server
+        const sorted = data.sort((reviewA, reviewB) => {
+          if (new Date(reviewA.updatedAt) > new Date(reviewB.updatedAt)) return -1;
+          if (new Date(reviewA.updatedAt) < new Date(reviewB.updatedAt)) return 1;
+        });
+        callback(null, sorted);
+      });
+    }).catch(function(error) {
+      callback(error);
+    });
+  }
+
+  /**
+   * Post form
+   * @param {form} FormData for review form 
+   */
+  static sendForm(form) {
+    let data = [];
+    
+    form.forEach((value, name) => {
+      data.push(`${name}=${value}`)
+    })
+
+    let stringedData = data.join('&');
+
+    return fetch(DBHelper.API_Review_Create_URL, {
+      body: stringedData,
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(response => {
+      if (response && response.statusText === 'Created') {
+        return response.json();
+      }
+      else {
+        throw new Error('Failed to create review');
+      }
+    }).catch(err => {
+      console.log('[err]: ', err);
     });
   }
 

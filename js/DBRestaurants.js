@@ -27,15 +27,15 @@
     // });
 
     let restaurants;
-    DBHelper.fetchRestaurants(restaurantsCallback);
+    //DBHelper.fetchRestaurants(restaurantsCallback);
 
     restaurantsDBPromise.then(function(db) {
         const tx = db.transaction('restaurants', 'readwrite');
         const objectStore = tx.objectStore('restaurants');
         
-        restaurants.forEach(function(restaurant) {
-            objectStore.put(restaurant, restaurant.id);
-        });
+        // restaurants.forEach(function(restaurant) {
+        //     objectStore.put(restaurant, restaurant.id);
+        // });
 
         return tx.complete;
     }).then(function() {

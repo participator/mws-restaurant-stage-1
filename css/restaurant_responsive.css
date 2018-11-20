@@ -5,6 +5,7 @@
 }
 
 #restaurant-container,
+#reviewForm-container,
 #reviews-container {
     display: flex;
     flex-direction: column;
@@ -24,6 +25,7 @@
 @media screen and (max-width: 426px) {
     #breadcrumb,
     #restaurant-container,
+    #reviewForm-container,
     #reviews-container {
         width: 100%;
     }
