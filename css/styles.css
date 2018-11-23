@@ -81,7 +81,7 @@ nav {
   text-align:center;  
 }
 #breadcrumb {
-    padding: 10px 40px 16px;
+    padding: 10px 0px 16px;
     list-style: none;
     background-color: #eee;
     font-size: 17px;
@@ -197,7 +197,7 @@ nav {
   color: #fff;
   display: inline-block;
   font-size: 10pt;
-  margin: 15px 0 0;
+  /* margin: 15px 0 0; */
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
@@ -263,6 +263,24 @@ nav {
   text-align: center;
   text-transform: uppercase;
 	width: 90%;
+}
+.restaurant-actions {
+  display: flex;
+  align-items: flex-start;
+  margin: 15px 0 0;
+}
+.restaurant-favorite {
+  background: none;
+  border: none;
+  color: orange;
+  font-size: 2em;
+  margin-left: 10px;
+}
+.restaurant-favorite_nav {
+  background: none;
+  border: none;
+  color: orange;
+  font-size: 1.2em;
 }
 #restaurant-container,
 #reviewForm-container, 

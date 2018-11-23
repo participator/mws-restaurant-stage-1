@@ -166,29 +166,67 @@ createRestaurantHTML = (restaurant) => {
     image.alt = 'Restaurant Image';
     image.className = 'restaurant-img';
     image.src = DBHelper.imageUrlForRestaurant(restaurant);
-    li.append(image);
+    li.appendChild(image);
   } 
 
   const name = document.createElement('h1');
-  name.innerHTML = restaurant.name;
-  li.append(name);
+  name.append(restaurant.name);
+  li.appendChild(name);
 
   const neighborhood = document.createElement('p');
-  neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  neighborhood.append(restaurant.neighborhood);
+  li.appendChild(neighborhood);
 
   const address = document.createElement('p');
-  address.innerHTML = restaurant.address;
-  li.append(address);
+  address.append(restaurant.address);
+  li.appendChild(address);
+
+  const actionDiv = document.createElement('div');
+  actionDiv.className = 'restaurant-actions';
 
   const more = document.createElement('a');
-  more.innerHTML = 'View Details';
+  more.append('View Details');
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.setAttribute('aria-label', `View Restaurant Details for ${restaurant.name}`);
-  li.append(more)
+  actionDiv.appendChild(more)
+
+  // Create favorite button
+  const favorite = document.createElement('button');
+  if (restaurant.is_favorite) {
+    favorite.append('★');
+    favorite.dataset.isFavorite = true;
+    favorite.title = 'Make Unfavorite Restaurant';
+  }
+  else {
+    favorite.append('☆');
+    favorite.dataset.isFavorite = false;
+    favorite.title = 'Make favorite Restaurant';
+  }
+  
+  favorite.className = 'restaurant-favorite';
+  favorite.onclick = (event, id = restaurant.id, setFavorite = !JSON.parse(favorite.dataset.isFavorite)) => {
+      
+    DBHelper.toggleRestaurantFavoriteStatus(id, setFavorite, favoriteStatus => {
+      event.target.dataset.isFavorite = favoriteStatus;
+      if (favoriteStatus) {
+        event.target.innerHTML = '★'
+      }
+      else {
+        event.target.innerHTML = '☆';
+      }
+    });
+  };
+
+  actionDiv.appendChild(favorite);
+  li.appendChild(actionDiv);
 
   return li
 }
+
+/**
+ * 
+ */
+
 
 /**
  * Add markers for current restaurants to the map.

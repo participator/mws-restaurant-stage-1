@@ -9,7 +9,7 @@ class DBHelper {
    */
   static get API_Restaurants_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}/restaurants/`;
   }
 
    /**
@@ -18,7 +18,7 @@ class DBHelper {
    */
   static get API_Reviews_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/reviews/?restaurant_id=`;
+    return `http://localhost:${port}/reviews?restaurant_id=`;
   }
 
   /**
@@ -28,6 +28,24 @@ class DBHelper {
   static get API_Review_Create_URL() {
     const port = 1337;
     return `http://localhost:${port}/reviews/`;
+  }
+
+  /**
+   * API PUT Favorite URL
+   * Favorite a Restuarant
+   */
+  static get API_Restaurant_Favorite_URL() {
+    const port = 1337;
+    return `http://localhost:${port}/restaurants/{restaurant_id}/`; // /?is_favorite=true`
+  }
+
+  /**
+   * API PUT Favorite URL
+   * Favorite a Restuarant
+   */
+  static get API_Restaurant_UnFavorite_URL() {
+    const port = 1337;
+    return `http://localhost:${port}/restaurants/{restaurant_id}/`; // ?is_favorite=false`
   }
 
   /**
@@ -200,6 +218,30 @@ class DBHelper {
     }).catch(function(error) {
       callback(error);
     });
+  }
+
+  static toggleRestaurantFavoriteStatus(id, setFavorite, callback) {
+    let url;
+
+    if (setFavorite) {
+      url = DBHelper.API_Restaurant_Favorite_URL.replace('{restaurant_id}', id);
+    }
+    else {
+      url = DBHelper.API_Restaurant_UnFavorite_URL.replace('{restaurant_id}', id);
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('put', url);
+    xhr.send(JSON.stringify({is_favorite: setFavorite}));
+    xhr.onload = function(event) {
+      if (event.target.response && event.target.status === 200) {
+        return callback(JSON.parse(event.target.response).is_favorite);
+      }
+      throw new Error('Response not okay status');
+    };
+    xhr.onerror = function(event) {
+      console.log('[error] toggle restaurant favorite status failed', event.target.response);
+    }
   }
 
   /**

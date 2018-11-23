@@ -163,6 +163,12 @@ fillReviewFormHTML = () => {
 
     DBHelper.sendForm(new FormData(form)).then(review => {
       if (review) {
+        // TODO
+        // - Add success message to UI
+        // -- Change Submit to Green Success and Clear form
+        // -- Return to Submit after 3 seconds
+        // setTimeout(showFormSuccess, 300);
+
         fillReviewHTML(review);
           console.info('[update reviews]: ', [review]);          
         }
@@ -301,7 +307,42 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   li.setAttribute('aria-current', 'page');
+  li.appendChild(fillFavorite());
   breadcrumb.appendChild(li);
+}
+
+/**
+ * Add favorite or unfavorite icon
+ */
+fillFavorite = (restaurant = self.restaurant) => {
+  const favorite = document.createElement('button');
+  
+  if (restaurant.is_favorite) {
+    favorite.append('★');
+    favorite.dataset.isFavorite = true;
+    favorite.title = 'Make Unfavorite Restaurant';
+  }
+  else {
+    favorite.append('☆');
+    favorite.dataset.isFavorite = false;
+    favorite.title = 'Make Favorite Restaurant';
+  }
+
+  favorite.className = 'restaurant-favorite_nav';
+  favorite.onclick = (event, id = restaurant.id, setFavorite = !JSON.parse(favorite.dataset.isFavorite)) => {
+    
+    DBHelper.toggleRestaurantFavoriteStatus(id, setFavorite, favoriteStatus => {
+      event.target.dataset.isFavorite = favoriteStatus;
+      if (favoriteStatus) {
+        event.target.innerHTML = '★'
+      }
+      else {
+        event.target.innerHTML = '☆';
+      }
+    });
+  };
+
+  return favorite;
 }
 
 /**
